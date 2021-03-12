@@ -12,6 +12,12 @@ function menorMayor(numeros) {
   // y 15 es el número más grande (mayor) dentro del arreglo [4, 6, 1, 7, 15]
 
   // Tu código aca:
+
+  var min= Math.min(...numeros);
+  var max= Math.max(...numeros);
+  var arr=[min,max];
+
+  return arr;
 }
 
 function stringMasLarga(strings) {
@@ -22,7 +28,13 @@ function stringMasLarga(strings) {
   // stringMasLarga(['JavaScript', 'HTML', 'CSS']); debe retornar 'JavaScript'
 
   // Tu código aca:
-
+  var palabraMasLarga=strings[0];
+  for(let i = 0; i<strings.length; i++){
+    if(strings[i].length> palabraMasLarga.length){
+      palabraMasLarga = strings[i];
+    }
+  }
+  return palabraMasLarga
 }
 
 function buscarAmigo(amigos, nombre) {
@@ -35,7 +47,13 @@ function buscarAmigo(amigos, nombre) {
   //  buscarAmigo(amigos, 'toni') debe devolver { nombre: 'toni', edad: 33 };
 
   // Tu código aca:
-
+  var nombre_edad;
+  for(let i = 0 ; i<amigos.length;i++){
+    if(amigos[i].nombre === nombre){
+      nombre_edad= amigos[i];
+    }
+  }
+  return nombre_edad;
 }
 
 function sumArray(array, n) {
@@ -53,7 +71,19 @@ function sumArray(array, n) {
   // por lo tanto también debería devolver false en este caso
 
   // Tu código aca:
-
+  var valor=false;
+  var suma;
+  for(let i=0; i<array.length;i++){
+    for(let j=array.length; j>1;j--){
+      suma= array[i]+array[j]
+      if(j===i){
+        break
+      }else if(suma === n){
+        valor=true;
+      }
+    }
+  }
+  return valor;
 
 };
 
@@ -67,7 +97,17 @@ function pluck(array, propiedad) {
   // Pista: es una buena oportunidad para usar map.
 
   // Tu código acá:
-
+  if(propiedad==='name'){
+    let map= array.map(function(arr){
+      return arr.name
+    })
+    return map
+  }else if(propiedad ==='price'){
+    let map= array.map(function(arr){
+      return arr.price
+    })
+    return map;
+  }
 }
 
 // =======================================================================
@@ -80,7 +120,10 @@ function crearClasePersona() {
       // Inicializar las propiedades de la persona con los valores recibidos como argumento
 
       // Tu código aca:
-
+      this.nombre= nombre;
+      this.edad=edad;
+      this.hobbies=hobbies;
+      this.amigos=amigos;
     }
 
     addFriend(nombre, edad) {
@@ -89,7 +132,7 @@ function crearClasePersona() {
       // No debe retornar nada.
 
       // Tu código aca:
-
+      this.amigos.push({nombre, edad})
     }
 
     addHobby(hobby) {
@@ -97,8 +140,9 @@ function crearClasePersona() {
       // No debe retornar nada.
 
       // Tu código aca:
-
+      this.hobbies.push(hobby)
     }
+
     getFriends() {
       // El método 'getFriends' debe retornar un arreglo con sólo los nombres del arreglo de amigos
       // de la persona.
@@ -107,7 +151,11 @@ function crearClasePersona() {
       // persona.getFriends() debería devolver ['martin', 'toni']
 
       // Tu código aca:
-
+      var friends=[];
+      for(let i=0; i<this.amigos.length;i++){
+        friends.push(this.amigos[i].nombre)
+      }
+      return friends;
     }
 
     getHobbies() {
@@ -116,7 +164,11 @@ function crearClasePersona() {
       // persona.getHobbies() debe devolver ['correr', 'dormir', 'nadar']
 
       // Tu código aca:
-
+      var hobbys=[];
+      for(let i=0; i<this.hobbies.length;i++){
+        hobbys.push(this.hobbies[i])
+      }
+      return hobbys;
     }
 
     getPromedioEdad() {
@@ -135,7 +187,12 @@ function crearClasePersona() {
       // persona.getPromedioEdad() debería devolver 29 ya que (33 + 25) / 2 = 29
 
       // Tu código aca:
-
+      var sumaEdad=this.amigos[0].edad;
+      for(let i=1; i<this.amigos.length;i++){
+        sumaEdad+= this.amigos[i].edad;
+      }
+      var promedio= sumaEdad / this.amigos.length;
+      return promedio;
     }
   };
 
@@ -162,7 +219,14 @@ function filtrar(funcion) {
   // productos.filtrar(function(p) {
   //   return p.price >= 50;
   // }) => [{price: 100, name:'tv'}]
-
+  Array.prototype.filtrar = function (cb) {
+    let array = [];
+    for (let i = 0; i < this.length; i++) {
+      const a = cb(this[i]);
+      if(a)array.push(this[i]);
+    }
+    return array;
+  };
 };
 
 // No modifiques nada debajo de esta linea
